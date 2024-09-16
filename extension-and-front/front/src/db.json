@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Sofia Mendieta",
+      "email": "sofi@gmail.com",
+      "password": "sofi"
+    },
+    {
+      "id": "2",
+      "name": "Brayan Zuluaga",
+      "email": "bri@gmail.com",
+      "password": "bri"
+    },
+    {
+      "id": "c9af",
+      "name": "Pepe",
+      "email": "pepe@gmail.com",
+      "password": "pepe123"
+    },
+    {
+      "id": "ec77",
+      "name": "pedrito",
+      "email": "p@gmail.com",
+      "password": "p123"
+    },
+    {
+      "id": "dbc2",
+      "name": "jhon",
+      "email": "jhon@gmail.com",
+      "password": "jhon"
+    },
+    {
+      "id": "0127",
+      "name": "canela",
+      "email": "canela@gmail.com",
+      "password": "cane123"
+    },
+    {
+      "id": "1340",
+      "name": "sorani",
+      "email": "sorani@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "dea6",
+      "name": "horcu",
+      "email": "horcu@gmailcom",
+      "password": "horcu"
+    },
+    {
+      "id": "ace2",
+      "name": "diana",
+      "email": "diana@gmail.com",
+      "password": "diana"
+    },
+    {
+      "id": "e6f2",
+      "name": "prueba",
+      "email": "prueba@gmail.com",
+      "password": "prueba"
+    },
+    {
+      "id": "c74a",
+      "name": "Maria Ortiz",
+      "email": "maria@gmail.com",
+      "password": "maria123"
+    }
+  ]
+}
