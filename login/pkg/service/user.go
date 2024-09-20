@@ -10,7 +10,6 @@ import (
 	"log"
 	"os"
 
-
 	"CV_MANAGER/models"
 
 	"github.com/joho/godotenv"
@@ -29,12 +28,12 @@ type UserService interface {
 }
 
 type userService struct {
-	db *gorm.DB
+	db  *gorm.DB
 	key []byte
 }
 
-func init(){
-	if err := godotenv.Load(); err != nil{
+func init() {
+	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
 }
