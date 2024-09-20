@@ -48,9 +48,7 @@ func HandlePostRequest(responseWriter http.ResponseWriter, request *http.Request
 	if err != nil {
 		return nil, fmt.Errorf("error al compactar el JSON de la solicitud: %v", err)
 	}
-
 	responseWriter.Header().Set("Content-Type", "application/json")
-	responseWriter.Write(compactedBody.Bytes())
 
 	return &requestData, nil
 }

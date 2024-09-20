@@ -15,7 +15,7 @@ type Field struct {
 
 // Estructura para representar el JSON completo
 type ResponseToExtension struct {
-	ResponseFromServer []Field `json:"responseFromServer"`
+	ResponseFromServer []Field `json:"data"`
 }
 
 // Función para generar la respuesta JSON

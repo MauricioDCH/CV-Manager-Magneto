@@ -14,6 +14,8 @@ import (
 // y también están en la lista de campos disponibles.
 func FirstQuery(ctx context.Context, model *genai.GenerativeModel, jsonDataInputs, jsonFieldsData string) (string, error) {
 	// Construir el mensaje para la consulta
+	fmt.Println("jsonDataInputs: ", jsonDataInputs)
+	fmt.Println("jsonFieldsData: ", jsonFieldsData)
 	message1 := fmt.Sprintf(
 		"Necesito saber qué inputs de la siguiente lista requieren un valor: %s. "+
 			"Estos inputs deben estar presentes en esta otra lista de campos disponibles: %s. "+

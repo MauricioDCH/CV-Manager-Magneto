@@ -16,33 +16,40 @@ const LoginForm = ({ setUser }) => {
 
     setError("")
 
-    try {
-      const response = await fetch(`http://localhost:5000/users?email=${email}&password=${password}`)
-      const data = await response.json()
+      // Make the POST request with the email and password in the body
+      try {
+        const newUser = { email, password }
+        const response = await fetch('http://localhost:8000/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+        })
+        const data = await response.json()
 
-      if (data.length > 0) {
-        // Guarda el nombre y el email en el estado
-        setUser({ name: data[0].name, email: data[0].email })
-
-        localStorage.setItem('userInfo', JSON.stringify({ name: data[0].name, email: data[0].email }));
+        if (Object.keys(data).length > 0) {
+          // Guarda el nombre y el email en el estado
+          setUser({ name: data.name, email: data.email })
+  
+          localStorage.setItem('userInfo', JSON.stringify({ name: data.name, email: data.email }));
+          
+          const sendMessageToContentScript = (userInfo) => {
+            window.postMessage({ type: 'FROM_PAGE', userInfo }, '*');
+        };
         
-        const sendMessageToContentScript = (userInfo) => {
-          window.postMessage({ type: 'FROM_PAGE', userInfo }, '*');
-      };
-      
-      if (window.chrome) {
-          sendMessageToContentScript({ name: data[0].name, email: data[0].email });
-      }
-        
-
-      } else {
+        if (window.chrome) {
+            sendMessageToContentScript({ name: data.name, email: data.email });
+        }
+          
+        } else {
+          setError("El correo o la contraseña ingresados no se encuentran registradossss")
+        }
+      } catch (error) {
+        console.error("Error al iniciar sesión:", error)
         setError("El correo o la contraseña ingresados no se encuentran registrados")
       }
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error)
-      setError("Ocurrió un error al intentar iniciar sesión. Por favor, intenta de nuevo")
     }
-  }
 
   return (
     <section>
