@@ -43,11 +43,7 @@ const LoginForm = ({ setUser }) => {
         }
           
         } else {
-<<<<<<< HEAD
           setError("El correo o la contraseña ingresados no se encuentran registrados")
-=======
-          setError("El correo o la contraseña ingresados no se encuentran registradossss")
->>>>>>> origin/main
         }
       } catch (error) {
         console.error("Error al iniciar sesión:", error)
