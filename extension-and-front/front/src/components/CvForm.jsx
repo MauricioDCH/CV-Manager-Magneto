@@ -28,7 +28,7 @@ const CvForm = () => {
         // user_id quemado temporalmente
         const userId = 1;  // Cambia el valor según sea necesario
 
-        const resumeData = { name, lastName, email, phone, experience, skills, languages, education, user_id: userId };
+        const resumeData = { name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: userId };
 
         try {
             // Realizar la petición POST al endpoint
