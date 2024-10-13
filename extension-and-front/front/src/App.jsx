@@ -1,35 +1,32 @@
-import './App.css'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
-import HomePage from './pages/HomePage'
-import { useState } from 'react'
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import CvFormPage from './pages/CvFormPage';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [user, setUser] = useState(null)
-  const [isRegistering, setIsRegistering] = useState(false)
+  const [user, setUser] = useState(() => {
+    const userInfo = localStorage.getItem('userInfo');
+    return userInfo ? JSON.parse(userInfo) : null; // Cargar usuario desde localStorage
+  });
+
+  const [isRegistering, setIsRegistering] = useState(false);
 
   return (
     <div>
-      {
-        !user
-          ? (
-            isRegistering
-              ? <RegisterForm setUser={setUser} />
-              : <LoginForm setUser={setUser} />
-          )
-          : <HomePage user={user} setUser={setUser} />
-      }
-      <div>
-        {
-          !user && (
-            !isRegistering
-              ? <p>¿No tienes una cuenta? <button onClick={() => setIsRegistering(true)}>Regístrate aquí</button></p>
-              : <p>¿Ya tienes una cuenta? <button onClick={() => setIsRegistering(false)}>Inicia sesión aquí</button></p>
-          )
-        }
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<HomePage user={user} setUser={setUser} />} />
+          <Route path='/home' element={<HomePage user={user} setUser={setUser} />} />
+          <Route path='/register' element={<RegisterPage user={user} setUser={setUser} />} />
+          <Route path='/login' element={<LoginPage user={user} setUser={setUser} />} />
+          <Route path='/cv' element={<CvFormPage user={user} setUser={setUser} />} />
+        </Routes>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

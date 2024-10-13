@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
 import "./LoginForm.css"
 
@@ -5,6 +6,7 @@ const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const navigate = useNavigate(); // Crear instancia de useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,7 +43,7 @@ const LoginForm = ({ setUser }) => {
         if (window.chrome) {
             sendMessageToContentScript({ name: data.name, email: data.email });
         }
-          
+        navigate('/home');
         } else {
           setError("El correo o la contraseña ingresados no se encuentran registrados")
         }
