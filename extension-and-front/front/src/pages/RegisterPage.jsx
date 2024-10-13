@@ -3,9 +3,16 @@ import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import HomePage from './HomePage';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function RegisterPage({ user, setUser }) { // Recibe user y setUser
+export default function RegisterPage({ user, setUser }) { 
   const [isRegistering, setIsRegistering] = useState(true);
+  const navigate = useNavigate();
+
+  const handleToggleRegister = () => {
+    setIsRegistering(!isRegistering);
+    navigate(isRegistering ? '/login' : '/register');
+  };
 
   return (
     <div>
@@ -22,8 +29,8 @@ export default function RegisterPage({ user, setUser }) { // Recibe user y setUs
         {
           !user && (
             !isRegistering
-              ? <p>¿No tienes una cuenta? <button onClick={() => setIsRegistering(true)}>Regístrate aquí</button></p>
-              : <p>¿Ya tienes una cuenta? <button onClick={() => setIsRegistering(false)}>Inicia sesión aquí</button></p>
+              ? <p>¿No tienes una cuenta? <button onClick={handleToggleRegister}>Regístrate aquí</button></p>
+              : <p>¿Ya tienes una cuenta? <button onClick={handleToggleRegister}>Inicia sesión aquí</button></p>
           )
         }
       </div>
