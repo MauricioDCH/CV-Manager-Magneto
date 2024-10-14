@@ -26,7 +26,6 @@ func ConnectPostgres(cfg *config.Config) (*gorm.DB, error) {
 		return nil, fmt.Errorf("error opening database connection: %w", err)
 	}
 
-	// Probar la conexión
 	sqlDB, err := db.DB()
 	if err != nil {
 		return nil, fmt.Errorf("error getting SQL DB: %w", err)

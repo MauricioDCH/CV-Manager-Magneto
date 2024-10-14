@@ -31,7 +31,7 @@ type UserService interface {
 
 type userService struct {
 	db  *gorm.DB
-	key []byte // Encryption key
+	key []byte
 }
 
 func init() {
@@ -114,7 +114,6 @@ func decrypt(ciphertext string, key []byte) ([]byte, error) {
 }
 
 func NewUserService(db *gorm.DB) (UserService, error) {
-	// Retrieve the master key from environment variables
 	masterKeyBase64 := os.Getenv("MASTER_KEY")
 	masterKey, err := decodeBase64(masterKeyBase64)
 	if err != nil {
@@ -124,7 +123,6 @@ func NewUserService(db *gorm.DB) (UserService, error) {
 		return nil, errors.New("invalid key size")
 	}
 
-	// Try to retrieve the encrypted key from the database
 	encryptedKey, err := getEncryptedKey(db)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, err
@@ -132,19 +130,16 @@ func NewUserService(db *gorm.DB) (UserService, error) {
 
 	var key []byte
 	if encryptedKey != "" {
-		// Decrypt the key
 		key, err = decrypt(encryptedKey, masterKey)
 		if err != nil {
 			return nil, err
 		}
 	} else {
-		// Generate a new key and save it
 		key, err = generateRandomKey()
 		if err != nil {
 			return nil, err
 		}
 
-		// Encrypt and save the new key
 		encryptedKey, err = encrypt(string(key), masterKey)
 		if err != nil {
 			return nil, err

@@ -6,8 +6,5 @@ fmt:
 vet:
 	go vet ./...
 
-lint:
-	golangci-lint run
-
-run: fmt vet lint
+run: fmt vet
 	go run cmd/main.go
