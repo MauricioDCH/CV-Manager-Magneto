@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import './LoginForm.css';
 
 const CvForm = () => {
@@ -12,6 +13,20 @@ const CvForm = () => {
     const [education, setEducation] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    
+    const getUserIdFromToken = () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return null;
+        }
+        try {
+            const decodedToken = jwtDecode(token);
+            return decodedToken.sub; // Obtener el userId del campo 'sub' del token
+        } catch (error) {
+            console.error('Error al decodificar el token:', error);
+            return null;
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,9 +40,9 @@ const CvForm = () => {
 
         setError('');
 
-        // user_id quemado temporalmente
-        const userId = 1;  // Cambia el valor según sea necesario
-
+        // user_id recuperado del token JWT
+        const userId = getUserIdFromToken();
+        console.log("user id desde crear cv:", userId)
         const resumeData = { name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: userId };
 
         try {
