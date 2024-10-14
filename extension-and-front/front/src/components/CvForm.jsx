@@ -42,8 +42,9 @@ const CvForm = () => {
 
         // user_id recuperado del token JWT
         const userId = getUserIdFromToken();
-        console.log("user id desde crear cv:", userId)
-        const resumeData = { name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: userId };
+        const intUserId = parseInt(userId, 10);
+        console.log("user id desde crear cv:", intUserId)
+        const resumeData = { name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: intUserId };
 
         try {
             // Realizar la petición POST al endpoint
