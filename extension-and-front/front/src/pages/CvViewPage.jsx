@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom'; // Importar useNavigate
 import { jwtDecode } from 'jwt-decode';
 
 const CvViewPage = ({ user }) => {
@@ -7,6 +7,7 @@ const CvViewPage = ({ user }) => {
     const [selectedCv, setSelectedCv] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate(); // Inicializar el hook useNavigate
 
     const getUserIdFromToken = () => {
         const token = localStorage.getItem('token');
@@ -35,8 +36,8 @@ const CvViewPage = ({ user }) => {
                 const response = await fetch(`http://localhost:8080/cv/user/${userId}`);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("response: ", data);
                     setCvList(data);
+                    console.log(data)
                 } else {
                     setError('No se pudo obtener la hoja de vida.');
                 }
@@ -63,6 +64,12 @@ const CvViewPage = ({ user }) => {
         setSelectedCv(cv);
     };
 
+    const handleEditCv = () => {
+        if (selectedCv) {
+            navigate(`/edit-cv/${selectedCv.id}`); // Navegar a la página de edición
+        }
+    };
+
     return (
         <div>
             <h2>Hojas de Vida</h2>
@@ -72,18 +79,18 @@ const CvViewPage = ({ user }) => {
                         {cvList.map((cv) => (
                             <li key={cv.id}>
                                 <button onClick={() => handleCvSelect(cv)} style={{
-                                    backgroundColor: '#007bff',  // Color de fondo azul
-                                    color: 'white',               // Color del texto blanco
-                                    padding: '10px 20px',         // Espaciado interno
-                                    margin: '5px 0',              // Espaciado entre botones
-                                    border: 'none',               // Sin borde
-                                    borderRadius: '5px',          // Bordes redondeados
-                                    cursor: 'pointer',            // Cambiar cursor al pasar el mouse
-                                    fontSize: '16px',             // Tamaño de fuente
-                                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Sombra
+                                    backgroundColor: '#007bff',
+                                    color: 'white',
+                                    padding: '10px 20px',
+                                    margin: '5px 0',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                    fontSize: '16px',
+                                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                                 }}
-                                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0056b3'} // Cambia de color al pasar el mouse
-                                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#007bff'} // Vuelve al color original al quitar el mouse
+                                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
+                                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#007bff'}
                                 >
                                     {cv.name} {cv.last_name}
                                 </button>
@@ -99,6 +106,19 @@ const CvViewPage = ({ user }) => {
                             <p><strong>Habilidades:</strong> {selectedCv.skills}</p>
                             <p><strong>Idiomas:</strong> {selectedCv.languages}</p>
                             <p><strong>Educación:</strong> {selectedCv.education}</p>
+                            <button onClick={handleEditCv} style={{
+                                backgroundColor: '#28a745', // Color de fondo verde
+                                color: 'white', // Color del texto blanco
+                                padding: '10px 20px', // Espaciado interno
+                                margin: '10px 0', // Espaciado entre botones
+                                border: 'none', // Sin borde
+                                borderRadius: '5px', // Bordes redondeados
+                                cursor: 'pointer', // Cambiar cursor al pasar el mouse
+                                fontSize: '16px', // Tamaño de fuente
+                                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Sombra
+                            }}>
+                                Editar Hoja de Vida
+                            </button>
                         </div>
                     )}
                 </div>

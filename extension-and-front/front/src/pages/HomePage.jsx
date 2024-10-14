@@ -15,8 +15,10 @@ const HomePage = ({ user, setUser }) => {
       {user ? (
         <>
           <h1>Bienvenido, {user.name}</h1>
-          <Link to="/cv">Crear Hoja de vida</Link>
-          <Link to="/view-cv">Ver Hoja de Vida</Link>
+          
+          <Link to="/cv">Crear hoja de vida</Link> <br/> <br/>
+          <Link to="/view-cv">Ver hoja de vida</Link> <br/> <br/>
+
           <button onClick={handleLogout}>Cerrar Sesión</button>
         </>     
       ) : (
