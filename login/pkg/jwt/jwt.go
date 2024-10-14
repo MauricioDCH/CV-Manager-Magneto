@@ -7,7 +7,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-var secretKey = "yourSecretKey" // Replace with your actual secret key
+var secretKey = "cv-manager-key"
 
 func GenerateJWT(userID int) (string, error) {
 	claims := jwt.MapClaims{

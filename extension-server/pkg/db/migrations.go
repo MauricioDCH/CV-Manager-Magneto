@@ -31,5 +31,27 @@ func RunMigrations(db *sql.DB) {
 		log.Fatalf("Error ejecutando la migración de claves cifradas: %v", err)
 	}
 
-	log.Println("Migración ejecutada correctamente")
+	queryCVTable := `
+    CREATE TABLE IF NOT EXISTS cvs (
+        id SERIAL PRIMARY KEY,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        deleted_at TIMESTAMP,
+        name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        phone TEXT NOT NULL,
+        experience TEXT NOT NULL,
+        skills TEXT NOT NULL,
+        languages TEXT NOT NULL,
+        education TEXT NOT NULL,
+        user_id INTEGER NOT NULL REFERENCES users(id)
+    );
+    `
+	_, err = db.Exec(queryCVTable)
+	if err != nil {
+		log.Fatalf("Error ejecutando la migración del CV: %v", err)
+	}
+
+	log.Println("Migraciones ejecutadas correctamente")
 }

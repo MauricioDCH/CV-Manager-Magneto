@@ -20,7 +20,6 @@ func MakeListCVsHandler(svc service.CVService) http.HandlerFunc {
 			return
 		}
 
-		// Listar las CVs del usuario
 		cvs, err := svc.ListCVsByUser(uint(userID))
 		if err != nil {
 			http.Error(w, "Error fetching CVs", http.StatusInternalServerError)

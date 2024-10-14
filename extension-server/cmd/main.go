@@ -1,17 +1,15 @@
 package main
 
 import (
+	"extension-server/config"
+	"extension-server/models"
+	"extension-server/pkg/db"
+
+	"extension-server/pkg/service"
+	"extension-server/pkg/transport"
 	"log"
 	"net/http"
 	"os"
-
-	"CV_MANAGER/config"
-	"CV_MANAGER/models"
-	"CV_MANAGER/pkg/db"
-	"CV_MANAGER/pkg/service"
-	transportHttp "CV_MANAGER/pkg/transport/http"
-
-	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -28,17 +26,25 @@ func main() {
 	if err := dbConn.AutoMigrate(&models.User{}); err != nil {
 		log.Fatalf("Error ejecutando migraciones: %v", err)
 	}
+	log.Println("Migraciones ejecutadas con éxito")
 
-	userService, err := service.NewUserService(dbConn)
+	sqlDB, err := dbConn.DB()
 	if err != nil {
-		log.Fatalf("Error creando el servicio de usuarios: %v", err)
+		log.Fatalf("Error obteniendo la instancia de la base de datos SQL: %v", err)
+	}
+	defer sqlDB.Close()
+	log.Println("Conexión a la base de datos cerrada exitosa")
+
+	svc, err := service.NewService(sqlDB)
+	if err != nil {
+		log.Fatalf("Error creando el servicio: %v", err)
 	}
 
-	r := transportHttp.NewRouter(userService)
+	r := transport.NewRouter(svc)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8000"
+		port = "5000"
 	}
 
 	log.Printf("Servidor escuchando en el puerto %s...", port)
