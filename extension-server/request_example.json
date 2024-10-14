@@ -1,0 +1,37 @@
+{
+    "inputs": [
+        {
+            "name": "name",
+            "type": "text"
+        },
+        {
+            "name": "last_name",
+            "type": "text"
+        },
+        {
+            "name": "email",
+            "type": "text"
+        },
+        {
+            "name": "education",
+            "type": "text"
+        },
+        {
+            "name": "skills",
+            "type": "text"
+        },
+        {
+            "name": "pets",
+            "type": "text"
+        },
+        {
+            "name": "psiquiatric-issues",
+            "type": "text"
+        },
+        {
+            "name": "additional-information-for-postulation",
+            "type": "text"
+        }
+    ],
+    "email": "sergio.munoz@hotmail.com"
+}
