@@ -1,0 +1,36 @@
+{
+    "inputs": [
+        {
+            "name": "name",
+            "value": "Juan"
+        },
+        {
+            "name": "last_name",
+            "value": "Pérez"
+        },
+        {
+            "name": "email",
+            "value": "juan.perez@example.com"
+        },
+        {
+            "name": "education",
+            "value": "Ingeniería de Sistemas"
+        },
+        {
+            "name": "skills",
+            "value": "Go, Python, SQL"
+        },
+        {
+            "name": "pets",
+            "value": "No tengo mascotas."
+        },
+        {
+            "name": "psiquiatric-issues",
+            "value": "No tengo ningún problema de salud mental."
+        },
+        {
+            "name": "additional-information-for-postulation",
+            "value": "Estoy buscando un trabajo desafiante que me permita poner en práctica mis habilidades y crecer profesionalmente."
+        }
+    ]
+}
