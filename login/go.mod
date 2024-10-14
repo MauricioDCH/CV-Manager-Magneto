@@ -3,6 +3,7 @@ module CV_MANAGER
 go 1.23.0
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/gorilla/handlers v1.5.2
 	github.com/gorilla/mux v1.8.1
 	github.com/joho/godotenv v1.5.1

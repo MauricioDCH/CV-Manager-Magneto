@@ -16,8 +16,9 @@ const HomePage = ({ user, setUser }) => {
         <>
           <h1>Bienvenido, {user.name}</h1>
           <Link to="/cv">Crear Hoja de vida</Link>
+          <Link to="/view-cv">Ver Hoja de Vida</Link>
           <button onClick={handleLogout}>Cerrar Sesión</button>
-        </>
+        </>     
       ) : (
         <>
           <h1>Bienvenido a CV Manager</h1>

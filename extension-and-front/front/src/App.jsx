@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CvFormPage from './pages/CvFormPage';
+import CvViewPage from './pages/CvViewPage';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path='/register' element={<RegisterPage user={user} setUser={setUser} />} />
           <Route path='/login' element={<LoginPage user={user} setUser={setUser} />} />
           <Route path='/cv' element={<CvFormPage user={user} setUser={setUser} />} />
+          <Route path="/view-cv" element={<CvViewPage user={user} />} />
         </Routes>
       </BrowserRouter>
     </div>
