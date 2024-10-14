@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "CV Manager",
-    "version": "1.0",
+    "version": "2.0",
     "description": "Esta extensión permitirá el autorellenado de formularios a la hora de ingresar hojas de vida.",
     "icons": {
         "128": "./images/icon.png"

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const redirectButton = document.getElementById('redirectButton');
-  const sendFieldsButton = document.getElementById('sendFieldsButton');
+  //const sendFieldsButton = document.getElementById('sendFieldsButton');
+  const fillFormButton = document.getElementById('sendFieldsButton');
 
   // Manejar clic en el botón de redirección
   if (redirectButton) {
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('El botón de redirección no se encontró en el DOM.');
   }
 
-  // Manejar clic en el botón de enviar campos
+  /*// Manejar clic en el botón de enviar campos
   if (sendFieldsButton) {
     console.log("boton si sirve")
     sendFieldsButton.addEventListener('click', () => {
@@ -27,5 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   } else {
     console.error('El botón de enviar campos no se encontró en el DOM.');
-  }
+  }*/
+
+   // Manejar clic en el botón de rellenar formulario
+   if (fillFormButton) {
+    fillFormButton.addEventListener('click', () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                function: () => {
+                    window.postMessage({ type: 'FILL_FORM' }, '*');
+                }
+            });
+        });
+    });
+} else {
+    console.error('El botón de rellenar formulario no se encontró en el DOM.');
+}
 });

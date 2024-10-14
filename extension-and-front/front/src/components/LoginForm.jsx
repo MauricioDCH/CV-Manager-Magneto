@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
 import "./LoginForm.css"
 
@@ -5,6 +6,7 @@ const LoginForm = ({ setUser }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const navigate = useNavigate(); // Crear instancia de useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,40 +18,45 @@ const LoginForm = ({ setUser }) => {
 
     setError("")
 
-      // Make the POST request with the email and password in the body
-      try {
-        const newUser = { email, password }
-        const response = await fetch('http://localhost:8000/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newUser)
-        })
-        const data = await response.json()
+    // Make the POST request with the email and password in the body
+    try {
+      const newUser = { email, password }
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+      })
+      const data = await response.json()
 
-        if (Object.keys(data).length > 0) {
-          // Guarda el nombre y el email en el estado
-          setUser({ name: data.name, email: data.email })
-  
-          localStorage.setItem('userInfo', JSON.stringify({ name: data.name, email: data.email }));
-          
-          const sendMessageToContentScript = (userInfo) => {
-            window.postMessage({ type: 'FROM_PAGE', userInfo }, '*');
+      if (Object.keys(data).length > 0) {
+        console.log(data.token);
+
+        // Guarda el token JWT en localStorage
+        localStorage.setItem('token', data.token);
+
+        // Guarda el nombre y el email en el estado
+        setUser({ name: data.name, email: data.email })
+
+        localStorage.setItem('userInfo', JSON.stringify({ name: data.name, email: data.email }));
+
+        const sendMessageToContentScript = (userInfo) => {
+          window.postMessage({ type: 'FROM_PAGE', userInfo }, '*');
         };
-        
+
         if (window.chrome) {
-            sendMessageToContentScript({ name: data.name, email: data.email });
+          sendMessageToContentScript({ name: data.name, email: data.email });
         }
-          
-        } else {
-          setError("El correo o la contraseña ingresados no se encuentran registrados")
-        }
-      } catch (error) {
-        console.error("Error al iniciar sesión:", error)
+        navigate('/home');
+      } else {
         setError("El correo o la contraseña ingresados no se encuentran registrados")
       }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error)
+      setError("El correo o la contraseña ingresados no se encuentran registrados")
     }
+  }
 
   return (
     <section>

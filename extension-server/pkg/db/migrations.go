@@ -6,7 +6,6 @@ import (
 )
 
 func RunMigrations(db *sql.DB) {
-	// Crear la tabla users si no existe
 	queryUsers := `
     CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY,
@@ -21,7 +20,6 @@ func RunMigrations(db *sql.DB) {
 		log.Fatalf("Error ejecutando la migración de usuarios: %v", err)
 	}
 
-	// Crear la tabla encrypted_keys si no existe
 	queryEncryptedKeys := `
     CREATE TABLE IF NOT EXISTS encrypted_keys (
         id SERIAL PRIMARY KEY,
@@ -33,7 +31,6 @@ func RunMigrations(db *sql.DB) {
 		log.Fatalf("Error ejecutando la migración de claves cifradas: %v", err)
 	}
 
-	// Crear la tabla cv (todos los campos NOT NULL)
 	queryCVTable := `
     CREATE TABLE IF NOT EXISTS cvs (
         id SERIAL PRIMARY KEY,
