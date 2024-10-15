@@ -15,7 +15,7 @@ func NewRouter(svc service.Service) http.Handler {
 	r.HandleFunc("/endpoint", endpoint.HandlePostRequest(svc)).Methods("POST")
 
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:5000"}),
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)
