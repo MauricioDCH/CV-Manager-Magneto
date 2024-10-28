@@ -1,0 +1,78 @@
+services:
+  cloudsql-proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.33.4
+    command: "/cloud_sql_proxy -dir=/cloudsql -instances=cv-manager-432700:us-east1:cv-manager-db"
+    volumes:
+      - /cloudsql:/cloudsql
+    networks:
+      - app-network
+
+  create-cv:
+    build:
+      context: ./create-cv
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+  cv:
+    build:
+      context: ./cv
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8008"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+  front:
+    build:
+      context: ./extension-and-front/front
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+  extension-server:
+    build:
+      context: ./extension-server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+  login:
+    build:
+      context: ./login
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+  register:
+    build:
+      context: ./register
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cloudsql-proxy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
