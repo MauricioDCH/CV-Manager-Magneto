@@ -4,7 +4,22 @@
 | [<img src="https://avatars.githubusercontent.com/u/89171062?v=4" width=115><br><sub>Brayan David Zuluaga Giraldo.</sub>](https://github.com/bdzuluagag) |  [<img src="https://avatars.githubusercontent.com/u/79530549?v=4" width=115><br><sub>Sofía Mendieta Marín</sub>](https://github.com/somendietam) |   [<img src="https://avatars.githubusercontent.com/u/81777898?s=400&u=2eeba9c363f9c474c7fb419ef36562e2d2b6b866&v=4" width=115><br><sub>Mauricio David Correa Hernández.</sub>](https://github.com/MauricioDCH) |   [<img src="https://avatars.githubusercontent.com/u/56942218?v=4" width=115><br><sub>Pascual Gómez Londoño.</sub>](https://github.com/pascualgomz) |   [<img src="https://avatars.githubusercontent.com/u/100231247?v=4" width=115><br><sub>Juan Manuel Lopez Sanchez.</sub>](https://github.com/JuanMaLopez2) | 
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
-## ENDPOINTS AND HOW TO RUN IT.
+# ENDPOINTS AND HOW TO RUN IT.
+
+## WITH DOCKER.
+
+### **Use the command below**
+
+Make sure you have docker installed on your machine.
+
+[Install Docker](https://www.docker.com/)
+
+```bash
+docker compose up --build
+```
+
+## WITHOUT DOCKER.
+
 For more information, go to each service.
 
 ### Open 7 terminals, then run all services below.
