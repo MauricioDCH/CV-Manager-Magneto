@@ -8,9 +8,9 @@ import (
 )
 
 type CVService interface {
-    UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
-    ListCVsByUser(userID uint) ([]models.CV, error)
-    DeleteCV(cvID uint) error
+	UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
+	ListCVsByUser(userID uint) ([]models.CV, error)
+	DeleteCV(cvID uint) error
 }
 
 type cvService struct {
@@ -27,15 +27,16 @@ func (s *cvService) UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error) 
         return models.CV{}, errors.New("hoja de vida no encontrada")
     }
 
-    // Actualiza los campos de la hoja de vida
-    cv.Name = updatedCV.Name
-    cv.LastName = updatedCV.LastName
-    cv.Email = updatedCV.Email
-    cv.Phone = updatedCV.Phone
-    cv.Experience = updatedCV.Experience
-    cv.Skills = updatedCV.Skills
-    cv.Languages = updatedCV.Languages
-    cv.Education = updatedCV.Education
+	// Actualiza los campos de la hoja de vida
+	cv.Title = updatedCV.Title
+	cv.Name = updatedCV.Name
+	cv.LastName = updatedCV.LastName
+	cv.Email = updatedCV.Email
+	cv.Phone = updatedCV.Phone
+	cv.Experience = updatedCV.Experience
+	cv.Skills = updatedCV.Skills
+	cv.Languages = updatedCV.Languages
+	cv.Education = updatedCV.Education
 
     // Guardamos los cambios en la base de datos
     if err := s.db.Save(&cv).Error; err != nil {

@@ -7,6 +7,7 @@ import (
 )
 
 type CreateCVRequest struct {
+	Title      string `json:"title"`
 	Name       string `json:"name"`
 	LastName   string `json:"last_name"`
 	Email      string `json:"email"`
@@ -31,7 +32,7 @@ func MakeCreateCVHandler(svc service.CVService) http.HandlerFunc {
 			return
 		}
 
-		cv, err := svc.CreateCV(req.Name, req.LastName, req.Email, req.Phone, req.Experience, req.Skills, req.Languages, req.Education, req.UserID)
+		cv, err := svc.CreateCV(req.Title, req.Name, req.LastName, req.Email, req.Phone, req.Experience, req.Skills, req.Languages, req.Education, req.UserID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
