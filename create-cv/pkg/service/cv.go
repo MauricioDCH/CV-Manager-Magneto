@@ -8,7 +8,7 @@ import (
 )
 
 type CVService interface {
-	CreateCV(name, lastName, email, phone, experience, skills, languages, education string, userID uint) (models.CV, error)
+	CreateCV(title, name, lastName, email, phone, experience, skills, languages, education string, userID uint) (models.CV, error)
 }
 
 type cvService struct {
@@ -19,13 +19,14 @@ func NewCVService(db *gorm.DB) CVService {
 	return &cvService{db: db}
 }
 
-func (s *cvService) CreateCV(name, lastName, email, phone, experience, skills, languages, education string, userID uint) (models.CV, error) {
+func (s *cvService) CreateCV(title, name, lastName, email, phone, experience, skills, languages, education string, userID uint) (models.CV, error) {
 
 	if name == "" || lastName == "" || email == "" {
 		return models.CV{}, errors.New("nombre, apellido y correo electrónico son obligatorios")
 	}
 
 	cv := models.CV{
+		Title:      title,
 		Name:       name,
 		LastName:   lastName,
 		Email:      email,

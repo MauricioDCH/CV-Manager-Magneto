@@ -8,8 +8,9 @@ import (
 )
 
 type CVService interface {
-	UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
-	ListCVsByUser(userID uint) ([]models.CV, error)
+    UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
+    ListCVsByUser(userID uint) ([]models.CV, error)
+    DeleteCV(cvID uint) error
 }
 
 type cvService struct {
@@ -47,4 +48,8 @@ func (s *cvService) ListCVsByUser(userID uint) ([]models.CV, error) {
 	var cvs []models.CV
 	err := s.db.Where("user_id = ?", userID).Find(&cvs).Error
 	return cvs, err
+}
+
+func (s *cvService) DeleteCV(cvID uint) error {
+	return s.db.Delete(&models.CV{}, cvID).Error
 }
