@@ -42,12 +42,12 @@ func HandlePostRequest(svc service.Service) http.HandlerFunc {
 			return
 		}
 
-		if requestData.Email == "" {
-			http.Error(responseWriter, "El campo 'email' no puede estar vacío", http.StatusBadRequest)
+		if requestData.Idcv == 0 {
+			http.Error(responseWriter, "El campo 'idcv' no puede ser 0", http.StatusBadRequest)
 			return
 		}
 
-		cvsData, err := svc.GetCvsByEmail(requestData.Email)
+		cvsData, err := svc.GetCvsByEmail(requestData.Idcv)
 		if err != nil {
 			http.Error(responseWriter, fmt.Sprintf("Error en el servicio: %s", err.Error()), http.StatusInternalServerError)
 			return
