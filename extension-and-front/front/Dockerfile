@@ -11,6 +11,6 @@ RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
 RUN npm run build
 
-EXPOSE 5173:5173
+EXPOSE 5173
 
 ENTRYPOINT ["npm", "run", "dev", "--", "--host"]
