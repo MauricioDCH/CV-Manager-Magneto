@@ -11,6 +11,7 @@ import (
 )
 
 type UpdateCVRequest struct {
+	Title      string `json:"title"`
 	Name       string `json:"name"`
 	LastName   string `json:"last_name"`
 	Email      string `json:"email"`
@@ -37,6 +38,7 @@ func MakeUpdateCVHandler(svc service.CVService) http.HandlerFunc {
 		}
 
 		updatedCV := models.CV{
+			Title:      req.Title,
 			Name:       req.Name,
 			LastName:   req.LastName,
 			Email:      req.Email,

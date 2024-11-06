@@ -8,9 +8,9 @@ import (
 )
 
 type CVService interface {
-    UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
-    ListCVsByUser(userID uint) ([]models.CV, error)
-    DeleteCV(cvID uint) error
+	UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error)
+	ListCVsByUser(userID uint) ([]models.CV, error)
+	DeleteCV(cvID uint) error
 }
 
 type cvService struct {
@@ -28,6 +28,7 @@ func (s *cvService) UpdateCV(cvID uint, updatedCV models.CV) (models.CV, error) 
 	}
 
 	// Actualiza los campos de la hoja de vida
+	cv.Title = updatedCV.Title
 	cv.Name = updatedCV.Name
 	cv.LastName = updatedCV.LastName
 	cv.Email = updatedCV.Email
