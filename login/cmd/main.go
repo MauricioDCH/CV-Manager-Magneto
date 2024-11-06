@@ -11,7 +11,7 @@ import (
 	"CV_MANAGER/pkg/service"
 	transportHttp "CV_MANAGER/pkg/transport/http"
 
-	_ "github.com/lib/pq" // Importa el driver de PostgreSQL
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -20,13 +20,11 @@ func main() {
 		log.Fatalf("Error cargando la configuración: %v", err)
 	}
 
-	// Conectar a la base de datos
 	dbConn, err := db.ConnectPostgres(cfg)
 	if err != nil {
 		log.Fatalf("Error conectando a la base de datos: %v", err)
 	}
 
-	// Ejecutar migraciones para crear la tabla de usuarios (si es necesario)
 	if err := dbConn.AutoMigrate(&models.User{}); err != nil {
 		log.Fatalf("Error ejecutando migraciones: %v", err)
 	}

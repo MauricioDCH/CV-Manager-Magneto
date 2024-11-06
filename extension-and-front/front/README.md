@@ -7,3 +7,11 @@ Antes de comenzar, asegúrate de tener los siguientes programas instalados:
 ## Instalación de dependecias necesarias
 
 npm install
+
+npm install react-router-dom
+
+npm install jwt-decode
+
+## Comando para ejecutar Front-end
+npm run dev
+

@@ -20,7 +20,7 @@ type Config struct {
 func LoadConfig() (*Config, error) {
 	err := godotenv.Load()
 	if err != nil {
-		return nil, fmt.Errorf("error loading .env file: %v", err)
+		return nil, fmt.Errorf("error loading .env file")
 	}
 
 	config := &Config{
@@ -31,11 +31,6 @@ func LoadConfig() (*Config, error) {
 		PrivateIP:              os.Getenv("PRIVATE_IP"),
 		MasterKey:              os.Getenv("MASTER_KEY"),
 		GeminiAPIKey:           os.Getenv("GEMINI_API_KEY"),
-	}
-
-	// Validar si las variables esenciales están presentes
-	if config.DBUser == "" || config.DBPassword == "" || config.DBName == "" || config.InstanceConnectionName == "" {
-		return nil, fmt.Errorf("one or more required environment variables are missing or empty")
 	}
 
 	return config, nil
