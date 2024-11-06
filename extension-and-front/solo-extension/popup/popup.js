@@ -1,7 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
   const redirectButton = document.getElementById('redirectButton');
-  //const sendFieldsButton = document.getElementById('sendFieldsButton');
   const fillFormButton = document.getElementById('sendFieldsButton');
+  const cvSelect = document.getElementById('cvSelect');
+
+  // Solicitar el token a content.js
+  const requestToken = () => {
+    return new Promise((resolve) => {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'REQUEST_TOKEN' }, (response) => {
+          console.log("response:", response, "response token:", response.token)
+          if (response && response.token) {
+            resolve(response.token);
+          } else {
+            console.error('No se pudo obtener el token');
+            resolve(null);
+          }
+        });
+      });
+    });
+  };
+
+  function decodeJWT(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+  // Función para obtener el userId desde el token
+  const getUserIdFromToken = (token) => {
+    if (!token) return null;
+    try {
+      const decodedToken = decodeJWT(token); // Asegúrate de tener jwt-decode como dependencia
+      console.log(decodedToken);
+      console.log(decodedToken.sub)
+      return decodedToken.sub; // Obtener el userId del campo 'sub' del token
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
+  };
+
+  // Cargar las opciones de hojas de vida en el menú desplegable
+  const loadCvOptions = async () => {
+    const token = await requestToken();
+    if (!token) return;
+
+    const userId = getUserIdFromToken(token);
+    if (!userId) return;
+
+    try {
+      const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
+      const cvs = await response.json();
+
+      cvs.forEach(cv => {
+        const option = document.createElement('option');
+        option.value = cv.id;
+        option.textContent = cv.title;
+        cvSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Error al cargar las hojas de vida:', error);
+    }
+  };
+
+  loadCvOptions();
 
   // Manejar clic en el botón de redirección
   if (redirectButton) {
@@ -14,22 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('El botón de redirección no se encontró en el DOM.');
   }
-
-  /*// Manejar clic en el botón de enviar campos
-  if (sendFieldsButton) {
-    console.log("boton si sirve")
-    sendFieldsButton.addEventListener('click', () => {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.scripting.executeScript({
-          target: { tabId: tabs[0].id },
-          files: ['./scripts/content.js'] // Asegúrate de que el nombre del archivo del content script sea correcto
-        });
-      });
-    });
-  } else {
-    console.error('El botón de enviar campos no se encontró en el DOM.');
-  }*/
-
    // Manejar clic en el botón de rellenar formulario
    if (fillFormButton) {
     fillFormButton.addEventListener('click', () => {

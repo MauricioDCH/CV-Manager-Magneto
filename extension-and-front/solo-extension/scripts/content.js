@@ -20,6 +20,15 @@ filteredInputs.forEach(input => {
     }
 });
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'REQUEST_TOKEN') {
+        const token = localStorage.getItem('token');
+        console.log("tokenJWTcontent", token)
+        sendResponse({ token: token });
+    }
+    return true; // Esto permite enviar una respuesta de forma asíncrona
+});
+
 // Escucha los mensajes desde la página web
 window.addEventListener('message', (event) => {
     if (event.source !== window) return;
