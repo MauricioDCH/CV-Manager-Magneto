@@ -13,6 +13,6 @@ COPY . .
 
 RUN go build -o login cmd/main.go
 
-EXPOSE 8000
+EXPOSE 8000:8000
 
 CMD ["./login"]

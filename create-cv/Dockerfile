@@ -13,6 +13,6 @@ COPY . .
 
 RUN go build -o create-cv cmd/main.go
 
-EXPOSE 8081
+EXPOSE 8081:8081
 
 CMD ["./create-cv"]
