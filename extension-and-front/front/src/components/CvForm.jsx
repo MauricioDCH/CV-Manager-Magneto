@@ -3,6 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import './LoginForm.css';
 
 const CvForm = () => {
+    const [title, setTitle] = useState('');
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ const CvForm = () => {
     const [education, setEducation] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    
+
     const getUserIdFromToken = () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -32,7 +33,7 @@ const CvForm = () => {
         e.preventDefault();
 
         // Validar campos requeridos
-        if (!name || !lastName || !email || !phone || !experience || !skills || !languages || !education) {
+        if (!title || !name || !lastName || !email || !phone || !experience || !skills || !languages || !education) {
             setError('Todos los campos son obligatorios');
             setSuccess('');
             return;
@@ -44,7 +45,7 @@ const CvForm = () => {
         const userId = getUserIdFromToken();
         const intUserId = parseInt(userId, 10);
         console.log("user id desde crear cv:", intUserId)
-        const resumeData = { name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: intUserId };
+        const resumeData = { title, name, last_name: lastName, email, phone, experience, skills, languages, education, user_id: intUserId };
 
         try {
             // Realizar la petición POST al endpoint
@@ -62,6 +63,7 @@ const CvForm = () => {
                 setSuccess('Hoja de vida guardada exitosamente!');
 
                 // Reiniciar el formulario
+                setTitle('');
                 setName('');
                 setLastName('');
                 setEmail('');
@@ -85,6 +87,7 @@ const CvForm = () => {
         <section>
             <h2>Crea tu Hoja de Vida</h2>
             <form className='form' onSubmit={handleSubmit}>
+                <input type="text" value={title} placeholder="Título de la hoja de vida" onChange={(e) => setTitle(e.target.value)} />
                 <input type="text" value={name} placeholder="Nombre" onChange={(e) => setName(e.target.value)} />
                 <input type="text" value={lastName} placeholder="Apellido" onChange={(e) => setLastName(e.target.value)} />
                 <input type="email" value={email} placeholder="Correo" onChange={(e) => setEmail(e.target.value)} />

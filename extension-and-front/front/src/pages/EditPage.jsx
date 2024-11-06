@@ -7,6 +7,7 @@ const CvEditPage = ({ user }) => {
   const { cvId } = useParams(); // Obtener el ID de la hoja de vida desde la URL
   const navigate = useNavigate();
   const [cvData, setCvData] = useState({
+    title: '',
     name: '',
     last_name: '',
     email: '',
@@ -106,9 +107,20 @@ const CvEditPage = ({ user }) => {
   }
 
   return (
+    
     <div>
       <h2>Editar Hoja de Vida</h2>
       <form onSubmit={handleSubmit}>
+      <div>
+          <label>Título:</label>
+          <input
+            type="text"
+            name="title"
+            value={cvData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <div>
           <label>Nombre:</label>
           <input

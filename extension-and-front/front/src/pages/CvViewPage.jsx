@@ -115,14 +115,16 @@ const CvViewPage = ({ user }) => {
                                     onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
                                     onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#007bff'}
                                 >
-                                    {cv.name} {cv.last_name}
+                                    {cv.title} - {cv.name} {cv.last_name}
                                 </button>
                             </li>
                         ))}
                     </ul>
                     {selectedCv && (
                         <div>
-                            <h3>Hoja de Vida de {selectedCv.name} {selectedCv.last_name}</h3>
+                            <h3>{selectedCv.title}</h3>
+                            <p><strong>Nombre:</strong> {selectedCv.name} </p>
+                            <p><strong>Apellidos:</strong> {selectedCv.last_name} </p>
                             <p><strong>Correo:</strong> {selectedCv.email}</p>
                             <p><strong>Teléfono:</strong> {selectedCv.phone}</p>
                             <p><strong>Experiencia:</strong> {selectedCv.experience}</p>
