@@ -13,6 +13,6 @@ COPY . .
 
 RUN go build -o cv cmd/main.go
 
-EXPOSE 8008:8008
+EXPOSE 8008
 
 CMD ["./cv"]

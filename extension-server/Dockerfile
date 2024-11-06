@@ -22,7 +22,7 @@ COPY . .
 RUN go build -o extension-server cmd/main.go
 
 # Exponer el puerto
-EXPOSE 5000:5000
+EXPOSE 5000
 
 # Comando para ejecutar el servicio
 CMD ["./extension-server"]
