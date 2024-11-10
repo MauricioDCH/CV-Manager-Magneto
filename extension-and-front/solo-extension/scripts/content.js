@@ -55,7 +55,7 @@ window.addEventListener('message', (event) => {
         // Maneja el mensaje con tipo 'FILL_FORM'
         if (event.data.type === 'FILL_FORM') {
             chrome.storage.local.get('selectedCvId', (result) => {
-                let selectedCvId = result.selectedCvId || '';
+                let selectedCvId = parseInt(result.selectedCvId) || 0;
                 let inputsData = attributes;
 
                 // Formatea los datos en el formato solicitado
