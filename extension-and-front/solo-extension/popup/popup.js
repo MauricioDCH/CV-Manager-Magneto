@@ -3,19 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const fillFormButton = document.getElementById('sendFieldsButton');
   const cvSelect = document.getElementById('cvSelect');
 
-  // Solicitar el token a content.js
-  const requestToken = () => {
+  // Obtener el token desde chrome.storage.local
+  const getToken = () => {
     return new Promise((resolve) => {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, { type: 'REQUEST_TOKEN' }, (response) => {
-          console.log("response:", response, "response token:", response.token)
-          if (response && response.token) {
-            resolve(response.token);
-          } else {
-            console.error('No se pudo obtener el token');
-            resolve(null);
-          }
-        });
+      chrome.storage.local.get('token', (result) => {
+        if (result.token) {
+          console.log("Token JWT encontrado en chrome.storage.local:", result.token);
+          resolve(result.token);
+        } else {
+          console.error('No se pudo obtener el token');
+          resolve(null);
+        }
       });
     });
   };
@@ -23,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function decodeJWT(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
     return JSON.parse(jsonPayload);
-}
+  }
 
   // Función para obtener el userId desde el token
   const getUserIdFromToken = (token) => {
@@ -46,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Cargar las opciones de hojas de vida en el menú desplegable
   const loadCvOptions = async () => {
-    const token = await requestToken();
+    const token = await getToken();
     if (!token) return;
 
     const userId = getUserIdFromToken(token);
@@ -65,6 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Error al cargar las hojas de vida:', error);
     }
+    // Almacenar el ID de la hoja de vida seleccionada
+    cvSelect.addEventListener('change', (event) => {
+      const selectedCvId = event.target.value;
+      chrome.storage.local.set({ selectedCvId: selectedCvId }, () => {
+        console.log('ID de la hoja de vida seleccionada guardado:', selectedCvId);
+      });
+    });
   };
 
   loadCvOptions();
@@ -80,19 +85,19 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('El botón de redirección no se encontró en el DOM.');
   }
-   // Manejar clic en el botón de rellenar formulario
-   if (fillFormButton) {
+  // Manejar clic en el botón de rellenar formulario
+  if (fillFormButton) {
     fillFormButton.addEventListener('click', () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            chrome.scripting.executeScript({
-                target: { tabId: tabs[0].id },
-                function: () => {
-                    window.postMessage({ type: 'FILL_FORM' }, '*');
-                }
-            });
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          function: () => {
+            window.postMessage({ type: 'FILL_FORM' }, '*');
+          }
         });
+      });
     });
-} else {
+  } else {
     console.error('El botón de rellenar formulario no se encontró en el DOM.');
-}
+  }
 });

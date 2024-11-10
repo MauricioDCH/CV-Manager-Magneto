@@ -23,7 +23,15 @@ filteredInputs.forEach(input => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'REQUEST_TOKEN') {
         const token = localStorage.getItem('token');
-        console.log("tokenJWTcontent", token)
+        console.log("tokenJWTcontent", token);
+
+        if (token) {
+            // Guarda el token en chrome.storage.local
+            chrome.storage.local.set({ token: token }, () => {
+                console.log('Token JWT saved in chrome.storage.local:', token);
+            });
+        }
+
         sendResponse({ token: token });
     }
     return true; // Esto permite enviar una respuesta de forma asíncrona
@@ -46,14 +54,14 @@ window.addEventListener('message', (event) => {
 
         // Maneja el mensaje con tipo 'FILL_FORM'
         if (event.data.type === 'FILL_FORM') {
-            chrome.storage.local.get('email', (result) => {
-                let emailValue = result.email || '';
+            chrome.storage.local.get('selectedCvId', (result) => {
+                let selectedCvId = result.selectedCvId || '';
                 let inputsData = attributes;
 
                 // Formatea los datos en el formato solicitado
                 let requestData = {
                     "inputs": inputsData,
-                    "email": emailValue
+                    "idcv": selectedCvId
                 };
 
                 console.log('Atributos extraídos:', attributes);
