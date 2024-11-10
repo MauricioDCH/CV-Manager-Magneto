@@ -13,7 +13,7 @@ import (
 )
 
 type Service interface {
-	GetCvsByEmail(email string) (CvsData, error)
+	GetCvsByEmail(Idcv int) (CvsData, error)
 	GeminiQuery(cvsData CvsData, requestData RequestData) (string, error)
 	GenerateResponse(iaResponse IAResponse) ([]byte, error)
 }
@@ -37,7 +37,8 @@ type InputField struct {
 
 type RequestData struct {
 	Inputs []InputField `json:"inputs"`
-	Email  string       `json:"email"`
+	Idcv   int          `json:"idcv"`
+	//Email  string       `json:"email"`
 }
 
 type ResponseField struct {
@@ -65,17 +66,17 @@ func NewService(db *sql.DB) (Service, error) {
 	return &service{db: db}, nil
 }
 
-func (s *service) GetCvsByEmail(email string) (CvsData, error) {
+func (s *service) GetCvsByEmail(idcv int) (CvsData, error) {
 	var data CvsData
 
 	query := `
     SELECT u.id AS user_id, c.name, c.last_name, c.email, c.phone, c.experience, c.skills, c.languages, c.education
     FROM users u
     JOIN cvs c ON u.id = c.user_id
-    WHERE u.correo = $1;
+    WHERE c.id = $1;
 	`
 
-	err := s.db.QueryRow(query, email).Scan(
+	err := s.db.QueryRow(query, idcv).Scan(
 		&data.UserID,
 		&data.Name,
 		&data.LastName,
@@ -88,7 +89,7 @@ func (s *service) GetCvsByEmail(email string) (CvsData, error) {
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return data, fmt.Errorf("no se encontraron registros para el email: %s", email)
+			return data, fmt.Errorf("no se encontraron registros para el idcv: %d", idcv)
 		}
 		return data, err
 	}
@@ -124,7 +125,7 @@ func returnResponse(resp *genai.GenerateContentResponse) string {
 func (s *service) GeminiQuery(cvsData CvsData, requestData RequestData) (string, error) {
 	client, ctx := gemini.ConnectToGemini()
 	model := client.GenerativeModel("gemini-1.5-flash")
-	fmt.Printf("Consulta realizada a la IA GEMINI con los datos del correo: %s\n", requestData.Email)
+	fmt.Printf("Consulta realizada a la IA GEMINI con los datos del correo: %d\n", requestData.Idcv)
 
 	if ctx == nil {
 		return "", fmt.Errorf("el contexto es nil")
@@ -174,23 +175,92 @@ func (s *service) GeminiQuery(cvsData CvsData, requestData RequestData) (string,
             }
         ]
     }`
+
+	ia_bad_response_example := `
+	{
+		"inputs": [
+			{
+				"name": "02frstname",
+				"value": "Mauricio"
+			},
+			{
+				"name": "04lastname",
+				"value": "Correa H"
+			},
+			{
+				"name": "04fullname",
+				"value": "Mauricio David Correa H"
+			},
+			{
+				"name": "23cellphon",
+				"value": "3101234567"
+			},
+			{
+				"name": "24emailadr",
+				"value": "mauriciodch@gmail.com"
+			},
+			{
+				"name": "30_user_id",
+				"value": 38
+			},
+			{
+				"name": "60pers_sex",
+				"value": ""
+			},
+			{
+				"name": "61pers_ssn",
+				"value": null
+			},
+			{
+				"name": "03middle_i",
+				"value": null
+			}
+		]
+    }`
+
+	/*
+		message := fmt.Sprintf(
+			"Por favor, procesa la siguiente información para devolver una respuesta JSON clara y precisa:\n\n"+
+				"1. **Datos del CV**:\n%s\n\n"+
+				"2. **Datos de la petición**:\n%s\n\n"+
+				"3. **Instrucciones específicas**:\n"+
+				"- Sólo debes devolver en la respuesta JSON aquellos datos de la petición que tengan valores específicos en el CV.\n"+
+				"- **Omitir** cualquier campo en la petición que no tenga un valor en los datos del CV.\n"+
+				"- Si hay campos duplicados en la petición, responder sólo con el valor especificado en los datos del CV.\n\n"+
+				"Ejemplo esperado en JSON:\n%s\n\n"+
+				"NOTA IMPORTANTE: No inventes valores, no incluyas campos sin valor, y no devuelvas explicaciones adicionales. "+
+				"La respuesta debe ser sólo el JSON en el formato especificado, sin valores nulos, o vacíos, o espacios"+
+				"\n ASEGÚRATE DE QUE LA RESPUESTA SEA SÓLO EN FORMATO JSON ADMISIBLE PARA ENVIARLO DESDE EL SERVIDOR.",
+			cvsDataJSON, requestDataJSON, ia_response_example)
+	*/
+
 	message := fmt.Sprintf(
 		"Por favor, utiliza la siguiente información para generar una respuesta adecuada en formato JSON:\n\n"+
 			"**Datos del CV:**\n%s\n\n"+
-			"**Datos de la petición:**\n%s\n\n"+
-			"**Instrucciones:**\n"+
-			"Necesito que analices muy bien los datos recibidos en la petición para que me des una respuesta correcta de acuerdo con los datos del CV y que "+
-			"no perjudiquen al postulante y antes que lo ayuden.\n"+
-			"Necesito que la respuesta se base en los datos proporcionados en los JSON que se envían."+
-			"Asegúrate de combinar ambos conjuntos de datos de manera coherente y de evitar duplicaciones.\n\n"+
-			"**Ejemplo de la respuesta esperada en formato json:**\n%s\n\n"+
-			"IMPORTANTE: LAS ENTRADAS DE LA LISTA DEL JSON SÓLO DEBEN SER LOS DATOS DE LA PETICIÓN, SI SÓLO HAY 2 EN LA PETICIÓN, SÓLO SE COMPLETAN LOS DOS.\n\n"+
-			"NOTAS ADICIONAL: 1. SI EN LA PETICIÓN SE PIDE UN CAMPO QUE NO ESTÁ EN LOS DATOS DEL CV, SE DEBE RESPONDER CON UN VALOR POR INVENTADO.\n"+
-			"2. LOS VALORES INVENTADOS DEBEN SER REDACTADOS EN PRIMERA PERSONA.\n\n"+
-			"Asegúrate de que la respuesta sea clara, concisa y en el formato JSON especificado. NO DEBE INCULIR CONTENIDO DE EXPLICACIÓN ADICIONAL,"+
-			" SÓLO DEBE SER EL JSON ESPERADO.",
-		cvsDataJSON, requestDataJSON, ia_response_example)
 
+			"**Datos de la petición:**\n%s\n\n"+
+
+			"**INSTRUCCIONES:**\n"+
+			"1. Necesito que analices muy muy bien los datos recibidos en la petición, para que me entregues una respuesta correcta de acuerdo"+
+			" con los datos de la hoja de vida, curriculum vitae o postulación a un trabajo.\n"+
+			"2. No debe perjudicar al postulante.\n"+
+			"3. Necesito que la respuesta se base en SÓLO en los datos proporcionados en los JSON que se envían y que contengan un valor en Datos del CV:**\n%s\n\n."+
+			"4. Asegúrate de combinar ambos conjuntos de datos de manera coherente.\n\n"+
+
+			"**EJEMPLO DE LA RESPUESTA ESPERADA EN FORMATO JSON:**\n%s\n\n"+
+
+			"**VERIFICACIONES QUE SE DEBEN HACER ANTES DE GENERAR LA RESPUESTA:**\n\n"+
+			"1. Se debe de verificar que si hay valores repetidos en los datos de la petición, se deben responder con el mismo valor.\n"+
+			"2. Las entradas de la lista del JSON SÓLO  deben ser los datos de LA PETICIÓN sí y sólo sí tengan un valor en **LOS DATOS DEL CV**.\n"+
+			"3. Volver a verificar que: si en la petición hay un campo, el cual no está en **DATOS DEL CV**, entonces ¡SE DEBEN OMITIR DE LA RESPUESTA!"+
+			" o sea, que estos campos ¡NOOOOO PUEDE! estar en la respuesta, NO debe de estar en el JSON de la respuesta.\n"+
+			"4. La respuesta ¡NO PUEDE! contener entradas en el JSON que tengan valores \"value\" nulos, o sea que NO DEBE DE TENER en el parámetro \"value\" del JSON un valor null.\n"+
+			"5. La respuesta ¡NO PUEDE! contener un valores \"value\" que sea un string vacío, o sea que NO DEBE DE TENER en el parámetro \"value\" del JSON un valor \"\".\n"+
+			"6. La respuesta ¡NO PUEDE! contener valores inventados, deben ser sólo lo que contenga **DATOS DEL CV**.\n"+
+			"7. Asegúrate de que la respuesta sea clara, concisa.\n"+
+			"**ESTE ES UN EJEMPLO DE UNA RESPUESTA RESPUESTA QUE ESTÁ EQUIVOCADA: **\n%s\n\n"+
+			"8. ¡ASEGÚRATE DE QUE LA RESPUESTA SEA SÓLO EN FORMATO JSON Y CON LAS INDENTACIONES ADECUADAS!",
+		cvsDataJSON, requestDataJSON, cvsDataJSON, ia_response_example, ia_bad_response_example)
 	responseInputs, err := model.GenerateContent(ctx, genai.Text(message))
 	if err != nil {
 		return "", fmt.Errorf("error en GenerateContent: %v", err)
@@ -199,6 +269,11 @@ func (s *service) GeminiQuery(cvsData CvsData, requestData RequestData) (string,
 	if responseInputs == nil {
 		return "", fmt.Errorf("la respuesta de la IA es nil")
 	}
+
+	fmt.Println("--------------------------------------------------------------------------------------------------------------")
+	fmt.Println("PETICIÓN REALIZADA A GEMINI:")
+	fmt.Printf("%s\n", message)
+	fmt.Println("--------------------------------------------------------------------------------------------------------------")
 
 	fmt.Println("--------------------------------------------------------------------------------------------------------------")
 	fmt.Println("RESPUESTA DE LA GEMINI:")

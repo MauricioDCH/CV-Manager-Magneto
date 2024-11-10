@@ -16,7 +16,7 @@ func NewRouter(cvSvc service.CVService) http.Handler {
 	r.HandleFunc("/cv/{id}", endpoint.MakeDeleteCVHandler(cvSvc)).Methods("DELETE")
 
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:5173"}),
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)

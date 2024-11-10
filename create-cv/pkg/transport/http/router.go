@@ -14,7 +14,7 @@ func NewRouter(svc service.CVService) http.Handler {
 	r.HandleFunc("/create-cv", endpoint.MakeCreateCVHandler(svc)).Methods("POST")
 
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:5173"}),
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)
