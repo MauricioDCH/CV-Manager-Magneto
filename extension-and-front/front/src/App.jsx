@@ -6,6 +6,8 @@ import RegisterPage from './pages/RegisterPage';
 import CvFormPage from './pages/CvFormPage';
 import CvViewPage from './pages/CvViewPage';
 import CvEditPage from './pages/EditPage';
+import Navbar from './components/Navbar';
+
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -13,12 +15,17 @@ function App() {
     const userInfo = localStorage.getItem('userInfo');
     return userInfo ? JSON.parse(userInfo) : null; // Cargar usuario desde localStorage
   });
-
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('userInfo');
+  };
+  
   const [isRegistering, setIsRegistering] = useState(false);
 
   return (
     <div>
       <BrowserRouter>
+      {user && <Navbar onLogout={handleLogout} />}
         <Routes>
           <Route index element={<HomePage user={user} setUser={setUser} />} />
           <Route path='/home' element={<HomePage user={user} setUser={setUser} />} />

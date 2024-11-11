@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300&display=swap');
+
+.navbar {
+    width: 100%;
+    background-color: #f1f1f1;
+    color: white;
+    padding: 0px 20px; 
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    font-family: 'Lexend', sans-serif;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 4px 16px;
+    display: flex;
+    align-items: center;
+}
+
+/* Agrega una línea divisoria entre los enlaces */
+.navbar a + a {
+    border-left: 1px solid #ccc; /* Línea gris de separación */
+    padding-left: 16px; /* Ajusta el espacio para que la línea no quede pegada al texto */
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.navbar button:hover {
+    background-color: #555;
+}
+
+.logo-image {
+    width: 200px;
+    height: auto;
+}
