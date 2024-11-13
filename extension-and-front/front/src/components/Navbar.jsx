@@ -7,8 +7,8 @@ function Navbar({ onLogout }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/home"> {/* Puedes reemplazar este Link con una etiqueta de imagen si tienes un logo gráfico */}
-          <img src={logo}  alt="Logo" className="logo-image" /> {/* Cambia el src al path de tu logo */}
+        <Link to="/home"> 
+          <img src={logo}  alt="Logo" className="logo-image" /> 
         </Link>
       </div>
       <div className="navbar-links">

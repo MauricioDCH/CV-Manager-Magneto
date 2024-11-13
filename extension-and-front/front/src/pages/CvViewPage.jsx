@@ -7,7 +7,7 @@ const CvViewPage = ({ user }) => {
     const [selectedCv, setSelectedCv] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const getUserIdFromToken = () => {
         const token = localStorage.getItem('token');
