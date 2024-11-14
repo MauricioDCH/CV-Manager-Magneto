@@ -97,3 +97,9 @@
   color: #888;
 }
 
+.logout-button {
+  border-color: #a2a2a2;
+  margin-top: 20px; /* Ajusta el valor según el espacio que desees */
+}
+
+

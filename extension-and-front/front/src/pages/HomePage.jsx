@@ -85,8 +85,6 @@ const HomePage = ({ user, setUser }) => {
                       <p><strong>Habilidades:</strong> {cv.skills}</p>
 
                       <div className="cv-card-buttons">
-                        <button onClick={() => handleViewCv(cv.id)}>Ver</button>
-                        <button onClick={() => handleEditCv(cv.id)}>Editar</button>
                       </div>
                     </div>
                   ))}
@@ -97,7 +95,7 @@ const HomePage = ({ user, setUser }) => {
             </>
           )}
 
-          <button onClick={handleLogout} style={{ marginTop: '20px' }}>Cerrar Sesión</button>
+          <button className="logout-button" onClick={handleLogout} style={{ marginTop: '20px' }}>Cerrar Sesión</button>
         </>
       ) : (
         <>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import './LoginForm.css';
+import './CvForm.css';
 
 const CvForm = () => {
     const [title, setTitle] = useState('');
@@ -85,7 +85,7 @@ const CvForm = () => {
 
     return (
         <section>
-            <h2>Crea tu Hoja de Vida</h2>
+            <h1>Crea tu Hoja de Vida</h1>
             <form className='form' onSubmit={handleSubmit}>
                 <input type="text" value={title} placeholder="Título de la hoja de vida" onChange={(e) => setTitle(e.target.value)} />
                 <input type="text" value={name} placeholder="Nombre" onChange={(e) => setName(e.target.value)} />
@@ -98,8 +98,8 @@ const CvForm = () => {
                 <input type="text" value={education} placeholder="Educación (separados por comas)" onChange={(e) => setEducation(e.target.value)} />
                 <button type="submit">Guardar Hoja de Vida</button>
             </form>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
         </section>
     );
 };

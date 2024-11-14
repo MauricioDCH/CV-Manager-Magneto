@@ -1,0 +1,67 @@
+.cv-view-page {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cv-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.cv-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    position: relative;
+}
+
+.cv-item h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.cv-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.cv-details {
+    background-color: #f1f1f1;
+    padding: 15px;
+    margin-top: 10px; /* Ajusta o elimina este margen si es necesario */
+    border-radius: 5px;
+    text-align: left; /* Alineación a la izquierda del contenido */
+}
+
+.cv-details p {
+    margin: 0px 10px 20px 0px; /* Ajusta el margen entre las líneas */
+}
+
+/* Nuevo contenedor de botones */
+.cv-buttons {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 10px;
+}
+
+.cv-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+.cv-button.edit {
+    background-color: #00D591;
+}
+
+.cv-button.delete {
+    background-color: #dc3545;
+}
