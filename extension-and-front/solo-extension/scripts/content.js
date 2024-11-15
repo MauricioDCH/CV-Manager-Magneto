@@ -7,6 +7,17 @@ let filteredInputs = Array.from(inputs).filter(input => {
     return nameAttributes.some(attr => input.hasAttribute(attr));
 });
 
+const token = localStorage.getItem('token');
+
+if (token) {
+    console.log("Token encontrado en localStorage:", token);
+    chrome.storage.local.set({ token: token }, () => {
+        console.log('Token guardado en chrome.storage.local automáticamente');
+    });
+} else {
+    console.error('No se encontró el token en localStorage');
+}
+
 // Itera sobre los elementos seleccionados y extrae los atributos deseados
 filteredInputs.forEach(input => {
     let attr = {};
@@ -18,23 +29,6 @@ filteredInputs.forEach(input => {
     if (Object.keys(attr).length > 0) {
         attributes.push(attr);
     }
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === 'REQUEST_TOKEN') {
-        const token = localStorage.getItem('token');
-        console.log("tokenJWTcontent", token);
-
-        if (token) {
-            // Guarda el token en chrome.storage.local
-            chrome.storage.local.set({ token: token }, () => {
-                console.log('Token JWT saved in chrome.storage.local:', token);
-            });
-        }
-
-        sendResponse({ token: token });
-    }
-    return true; // Esto permite enviar una respuesta de forma asíncrona
 });
 
 // Escucha los mensajes desde la página web

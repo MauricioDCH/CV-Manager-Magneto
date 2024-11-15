@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
   const redirectButton = document.getElementById('redirectButton');
   const fillFormButton = document.getElementById('sendFieldsButton');
   const cvSelect = document.getElementById('cvSelect');
