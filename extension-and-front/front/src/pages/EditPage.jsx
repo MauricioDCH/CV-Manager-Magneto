@@ -108,101 +108,102 @@ const CvEditPage = ({ user }) => {
   }
 
   return (
-    
-    <div>
-      <h2>Edita tu hoja de vida</h2>
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Mensaje de éxito */}
-      <form onSubmit={handleSubmit}>
-      <div>
-          <label>Título:</label>
-          <input
-            type="text"
-            name="title"
-            value={cvData.title}
-            onChange={handleChange}
-            required
-          />
+    <div>      
+        <h2>Edita tu hoja de vida</h2>
+        <div className="cv-edit-form">
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Mensaje de éxito */}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Título:</label>
+            <input
+              type="text"
+              name="title"
+              value={cvData.title}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Nombre:</label>
+            <input
+              type="text"
+              name="name"
+              value={cvData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Apellido:</label>
+            <input
+              type="text"
+              name="last_name"
+              value={cvData.last_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Correo:</label>
+            <input
+              type="email"
+              name="email"
+              value={cvData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Teléfono:</label>
+            <input
+              type="tel"
+              name="phone"
+              value={cvData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Experiencia:</label>
+            <textarea
+              name="experience"
+              value={cvData.experience}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Habilidades:</label>
+            <textarea
+              name="skills"
+              value={cvData.skills}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Idiomas:</label>
+            <textarea
+              name="languages"
+              value={cvData.languages}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Educación:</label>
+            <textarea
+              name="education"
+              value={cvData.education}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit">Actualizar Hoja de Vida</button>
+        </form>
         </div>
-        <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="name"
-            value={cvData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Apellido:</label>
-          <input
-            type="text"
-            name="last_name"
-            value={cvData.last_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Correo:</label>
-          <input
-            type="email"
-            name="email"
-            value={cvData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Teléfono:</label>
-          <input
-            type="tel"
-            name="phone"
-            value={cvData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Experiencia:</label>
-          <textarea
-            name="experience"
-            value={cvData.experience}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Habilidades:</label>
-          <textarea
-            name="skills"
-            value={cvData.skills}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Idiomas:</label>
-          <textarea
-            name="languages"
-            value={cvData.languages}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Educación:</label>
-          <textarea
-            name="education"
-            value={cvData.education}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Actualizar Hoja de Vida</button>
-      </form>
-      <button className="back-button" onClick={() => navigate(-1)} style={{ marginTop: '10px' }}>Atrás</button>
-    </div>
+        <button className="back-button" onClick={() => navigate(-1)} style={{ marginTop: '10px' }}>Atrás</button>
+      </div>
   );
 };
 
