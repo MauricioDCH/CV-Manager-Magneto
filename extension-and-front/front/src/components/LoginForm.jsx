@@ -49,6 +49,9 @@ const LoginForm = ({ setUser }) => {
           sendMessageToContentScript({ name: data.name, email: data.email });
         }
         navigate('/home');
+        
+        window.location.reload(); 
+        
       } else {
         setError("El correo o la contraseña ingresados no se encuentran registrados")
       }

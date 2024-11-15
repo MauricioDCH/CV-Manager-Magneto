@@ -78,10 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Manejar clic en el botón de redirección
   if (redirectButton) {
     redirectButton.addEventListener('click', () => {
-      const loginUrl = 'http://localhost:5173'; // URL de tu página de login
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.tabs.update(tabs[0].id, { url: loginUrl });
-      });
+      const cvManagerUrl  = 'http://localhost:5173'; // URL de tu página de login
+      chrome.tabs.create({ url: cvManagerUrl });
     });
   } else {
     console.error('El botón de redirección no se encontró en el DOM.');
