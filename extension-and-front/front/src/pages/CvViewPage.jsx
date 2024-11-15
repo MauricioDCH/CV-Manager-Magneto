@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -117,8 +118,12 @@ const CvViewPage = () => {
                                     <p><strong>Idiomas:</strong> {cv.languages}</p>
                                     <p><strong>Educación:</strong> {cv.education}</p>
                                     <div className="cv-buttons">
-                                        <button className="cv-button edit" onClick={() => handleEditCv(cv.id)}>Editar</button>
-                                        <button className="cv-button delete" onClick={() => handleDeleteCv(cv.id)}>Eliminar</button>
+                                        <button className="cv-button edit" onClick={() => handleEditCv(cv.id)}>
+                                            <i className="fas fa-edit"></i> {/* Ícono de editar */}
+                                        </button>
+                                        <button className="cv-button delete" onClick={() => handleDeleteCv(cv.id)}>
+                                            <i className="fas fa-trash"></i> {/* Ícono de eliminar */}
+                                        </button>
                                     </div>
                                 </div>
                             )}

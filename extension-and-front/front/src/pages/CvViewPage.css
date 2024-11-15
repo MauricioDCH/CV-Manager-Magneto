@@ -45,17 +45,23 @@
 /* Nuevo contenedor de botones */
 .cv-buttons {
     display: flex;
-    justify-content: center; /* Centra los botones horizontalmente */
-    gap: 10px; /* Espacio entre los botones */
+    justify-content: center;
+    gap: 20px; /* Aumenta el espacio entre los botones */
     margin-top: 10px;
 }
 
 .cv-button {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 5px;
+    display: inline-flex; /* Usar flex para alinear el ícono */
+    justify-content: center; /* Centra el ícono dentro del botón */
+    align-items: center; /* Alinea el ícono verticalmente */
+    width: 40px; /* Establece un tamaño fijo para los botones */
+    height: 40px; /* Establece un tamaño fijo para los botones */
+    border-radius: 50%; /* Hacer los botones circulares */
     color: white;
-    text-decoration: none;
+    background-color: #00D591; /* Color de fondo para el botón de editar */
+    border: none;
+    cursor: pointer;
+    font-size: 18px; /* Ajusta el tamaño del ícono */
 }
 
 .cv-button.edit {
@@ -75,4 +81,8 @@
 
 .back-button:hover {
     background-color: #a8a8a8; /* Color de fondo en hover para mejor visibilidad */
+}
+
+.cv-button i {
+    font-size: 20px; /* Ajusta el tamaño del ícono */
 }
