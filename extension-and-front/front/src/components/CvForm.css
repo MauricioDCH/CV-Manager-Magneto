@@ -1,28 +1,55 @@
+#cv-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+}
+.cv-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 700px;
+}
+
+.cv-section h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 0px;
+}
+
+.cv-section .form {
+    max-width: 700px;
+    width: 100%;
+}
+
 .form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 700px;
+    width: 100%;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
 
 .form input, .form textarea {
     font-family: 'Lexend', sans-serif;
     width: 100%;
-    max-width: 600px;
     margin-bottom: 10px;
-    box-sizing: border-box;
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .form button {
-    background-color: #4CAF50;
+    background-color: #00D591;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -31,7 +58,7 @@
 }
 
 .form button:hover {
-    background-color: #45a049;
+    background-color: #00a571;
 }
 
 .form p {

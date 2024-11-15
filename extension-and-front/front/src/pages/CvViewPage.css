@@ -61,7 +61,18 @@
 .cv-button.edit {
     background-color: #00D591;
 }
+.cv-button.edit:hover {
+    background-color: #00a571;
+}
 
 .cv-button.delete {
     background-color: #dc3545;
+}
+
+.cv-button.delete:hover {
+    background-color: #a2313c;
+}
+
+.back-button:hover {
+    background-color: #a8a8a8; /* Color de fondo en hover para mejor visibilidad */
 }

@@ -19,6 +19,7 @@ const CvEditPage = ({ user }) => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState(''); // Para mostrar mensaje de éxito
 
   // Si el usuario no está logueado, redirige a la página de inicio de sesión
   if (!user) {
@@ -109,7 +110,8 @@ const CvEditPage = ({ user }) => {
   return (
     
     <div>
-      <h2>Editar Hoja de Vida</h2>
+      <h2>Edita tu hoja de vida</h2>
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* Mensaje de éxito */}
       <form onSubmit={handleSubmit}>
       <div>
           <label>Título:</label>
@@ -199,6 +201,7 @@ const CvEditPage = ({ user }) => {
         </div>
         <button type="submit">Actualizar Hoja de Vida</button>
       </form>
+      <button className="back-button" onClick={() => navigate(-1)} style={{ marginTop: '10px' }}>Atrás</button>
     </div>
   );
 };

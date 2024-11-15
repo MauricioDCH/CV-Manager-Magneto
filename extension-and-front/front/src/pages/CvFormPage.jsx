@@ -13,7 +13,7 @@ const CvFormPage = ({ user, setUser }) => {
   }
 
   return (
-    <div>
+    <div id="cv-page-container">
       <CvForm />
       <button className="back-button" onClick={() => navigate(-1)}>Atrás</button>
     </div>

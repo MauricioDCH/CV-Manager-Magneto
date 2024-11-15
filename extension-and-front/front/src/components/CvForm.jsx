@@ -84,8 +84,8 @@ const CvForm = () => {
     };
 
     return (
-        <section>
-            <h1>Crea tu Hoja de Vida</h1>
+        <section className="cv-section">
+            <h2>Crea tu hoja de vida</h2>
             <form className='form' onSubmit={handleSubmit}>
                 <input type="text" value={title} placeholder="Título de la hoja de vida" onChange={(e) => setTitle(e.target.value)} />
                 <input type="text" value={name} placeholder="Nombre" onChange={(e) => setName(e.target.value)} />

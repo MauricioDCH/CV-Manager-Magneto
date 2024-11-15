@@ -95,6 +95,8 @@ const CvViewPage = () => {
                         <li key={cv.id} style={{ marginBottom: '20px' }}>
                             <div
                                 onClick={() => toggleExpandCv(cv.id)}
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#00a571'}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#00D591'}
                                 style={{
                                     backgroundColor: '#00D591', color: 'white', padding: '10px 20px',
                                     cursor: 'pointer', borderRadius: '5px',

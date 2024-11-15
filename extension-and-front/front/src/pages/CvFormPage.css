@@ -1,26 +1,10 @@
-.cv-form-page {
+#cv-page-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 100px;
-    text-align: center;
-}
-
-.cv-form-page h1 {
-    font-family: 'Lexend', sans-serif;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.cv-form-page {
-    margin-top: 20px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 0px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
+    align-items: center; /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    padding: 20px;
+    max-width: 100%; /* Define el ancho máximo del contenedor */
 }
 
 .back-button {
