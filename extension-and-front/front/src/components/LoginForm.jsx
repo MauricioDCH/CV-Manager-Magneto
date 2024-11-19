@@ -21,7 +21,7 @@ const LoginForm = ({ setUser }) => {
     // Make the POST request with the email and password in the body
     try {
       const newUser = { email, password }
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch('http://login:8000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
