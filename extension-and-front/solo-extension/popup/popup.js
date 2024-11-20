@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!userId) return;
 
     try {
-      const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
+      const response = await fetch(`http://34.27.58.251:8008/cv/user/${userId}`);
       const cvs = await response.json();
 
       cvs.forEach(cv => {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Manejar clic en el botón de redirección
   if (redirectButton) {
     redirectButton.addEventListener('click', () => {
-      const cvManagerUrl  = 'http://localhost:5173'; // URL de tu página de login
+      const cvManagerUrl  = 'http://34.27.58.251:80'; // URL de tu página de login
       chrome.tabs.create({ url: cvManagerUrl });
     });
   } else {
