@@ -45,7 +45,10 @@ const RegisterForm = ({ setUser }) => {
 
     try {
       const newUser = { name, email, password };
-      const response = await fetch('http://register:8080/register', {
+      //const response = await fetch('http://register:8080/register', {
+      //const response = await fetch('http://localhost:8080/register', {
+      const response = await fetch('http://34.73.249.159:8080/register', {
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

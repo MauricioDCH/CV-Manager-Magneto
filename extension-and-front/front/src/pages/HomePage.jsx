@@ -33,7 +33,9 @@ const HomePage = ({ user, setUser }) => {
       }
 
       try {
-        const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+        //const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+        //const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
+        const response = await fetch(`http://34.73.249.159:8008/cv/user/${userId}`);
         if (response.ok) {
           const data = await response.json();
           setCvList(data);

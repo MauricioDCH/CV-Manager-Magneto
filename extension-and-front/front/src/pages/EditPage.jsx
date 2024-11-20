@@ -45,7 +45,9 @@ const CvEditPage = ({ user }) => {
       try {
         const userId = getUserIdFromToken();
         // Obtén todas las hojas de vida del usuario
-        const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+        //const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+        //const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
+        const response = await fetch(`http://34.73.249.159:8008/cv/user/${userId}`);
 
         if (response.ok) {
           const data = await response.json();
@@ -75,7 +77,9 @@ const CvEditPage = ({ user }) => {
 
     // Realizar la petición PUT para actualizar la hoja de vida
     try {
-      const response = await fetch(`http://cv:8008/cv/${cvId}`, {
+      //const response = await fetch(`http://cv:8008/cv/${cvId}`, {
+      //const response = await fetch(`http://localhost:8008/cv/${cvId}`, {
+      const response = await fetch(`http://34.73.249.159:8008/cv/${cvId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
