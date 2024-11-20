@@ -1,12 +1,13 @@
 services:
   cloudsql-proxy:
     image: gcr.io/cloudsql-docker/gce-proxy:1.33.4
+    container_name: cloud_sql_proxy
     command: "/cloud_sql_proxy -dir=/cloudsql -instances=cv-manager-432700:us-east1:cv-manager-db"
     volumes:
       - /cloudsql:/cloudsql
     networks:
       - app-network
-
+      
   create-cv:
     build:
       context: ./create-cv
