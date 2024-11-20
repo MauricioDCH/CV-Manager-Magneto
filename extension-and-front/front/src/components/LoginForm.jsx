@@ -23,7 +23,6 @@ const LoginForm = ({ setUser }) => {
       const newUser = { email, password }
       //const response = await fetch('http://login:8000/login', {
       //const response = await fetch('http://localhost:8000/login', {
-      //const response = await fetch('http://34.45.83.31:8000/login', {
       const response = await fetch('http://34.27.58.251:8000/login', {
         method: 'POST',
         headers: {
