@@ -47,7 +47,7 @@ const CvEditPage = ({ user }) => {
         // Obtén todas las hojas de vida del usuario
         //const response = await fetch(`http://cv:8008/cv/user/${userId}`);
         //const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
-        const response = await fetch(`http://34.45.83.31:8008/cv/user/${userId}`);
+        const response = await fetch(`http://34.27.58.251:8008/cv/user/${userId}`);
 
         if (response.ok) {
           const data = await response.json();
@@ -79,7 +79,7 @@ const CvEditPage = ({ user }) => {
     try {
       //const response = await fetch(`http://cv:8008/cv/${cvId}`, {
       //const response = await fetch(`http://localhost:8008/cv/${cvId}`, {
-      const response = await fetch(`http://34.45.83.31:8008/cv/${cvId}`, {
+      const response = await fetch(`http://34.27.58.251:8008/cv/${cvId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
