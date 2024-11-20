@@ -50,7 +50,8 @@ const CvForm = () => {
         try {
             // Realizar la petición POST al endpoint
             //const response = await fetch('http://create-cv:8081/create-cv', {
-            const response = await fetch('http://localhost:8081/create-cv', {
+            //const response = await fetch('http://localhost:8081/create-cv', {
+            const response = await fetch('http://34.73.249.159:8081/create-cv', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
