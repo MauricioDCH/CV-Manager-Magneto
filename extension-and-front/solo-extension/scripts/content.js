@@ -62,7 +62,8 @@ window.addEventListener('message', (event) => {
                 console.log('Datos a enviar:', requestData);
 
                 // Enviar los datos al endpoint y recibir respuesta para rellenar el formulario
-                fetch('http://localhost:5000/endpoint', {
+                //fetch('http://localhost:5000/endpoint', {
+                fetch('http://34.73.249.159:5000/endpoint', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
