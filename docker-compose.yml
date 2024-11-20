@@ -7,7 +7,7 @@ services:
       - /cloudsql:/cloudsql
     networks:
       - app-network
-      
+
   create-cv:
     build:
       context: ./create-cv
