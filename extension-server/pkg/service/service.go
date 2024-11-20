@@ -93,7 +93,6 @@ func (s *service) GetCvsByEmail(idcv int) (CvsData, error) {
 		}
 		return data, err
 	}
-
 	return data, nil
 }
 
@@ -124,8 +123,10 @@ func returnResponse(resp *genai.GenerateContentResponse) string {
 
 func (s *service) GeminiQuery(cvsData CvsData, requestData RequestData) (string, error) {
 	client, ctx := gemini.ConnectToGemini()
-	model := client.GenerativeModel("gemini-1.5-flash")
-	fmt.Printf("Consulta realizada a la IA GEMINI con los datos del correo: %d\n", requestData.Idcv)
+	//model := client.GenerativeModel("gemini-1.5-flash")
+	model := client.GenerativeModel("gemini-1.5-flash-8b")
+
+	fmt.Printf("Consulta realizada a la IA GEMINI con los datos del la hv con id: %d\n", requestData.Idcv)
 
 	if ctx == nil {
 		return "", fmt.Errorf("el contexto es nil")

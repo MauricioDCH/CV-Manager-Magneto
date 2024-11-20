@@ -35,7 +35,8 @@ const CvViewPage = () => {
             }
 
             try {
-                const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+                //const response = await fetch(`http://cv:8008/cv/user/${userId}`);
+                const response = await fetch(`http://localhost:8008/cv/user/${userId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setCvList(data);
@@ -65,7 +66,8 @@ const CvViewPage = () => {
         const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta hoja de vida?");
         if (confirmDelete) {
             try {
-                const response = await fetch(`http://cv:8008/cv/${cvId}`, { method: 'DELETE' });
+                //const response = await fetch(`http://cv:8008/cv/${cvId}`, { method: 'DELETE' });
+                const response = await fetch(`http://localhost:8008/cv/${cvId}`, { method: 'DELETE' });
                 if (response.ok) {
                     setCvList(cvList.filter(cv => cv.id !== cvId));
                     if (expandedCvId === cvId) setExpandedCvId(null);
